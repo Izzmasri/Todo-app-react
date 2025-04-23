@@ -10,7 +10,7 @@ import Todo from "./Todo";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect,useMemo } from "react";
 import { todoContetx } from "../contexts/todoContext";
 
 //for the id generator
@@ -22,13 +22,17 @@ export default function TodoList() {
   const [displayedTodoType, setDisplayedTodoType] = useState("all");
 
   //filtered tasks
-  const completedTodos = todo.filter((t) => {
-    return t.isCompleted;
-  });
+  const completedTodos = useMemo(() => {
+    return todo.filter((t) => {
+      return t.isCompleted;
+    });
+  }, [todo]);
 
-  const notCompletedTodos = todo.filter((t) => {
-    return !t.isCompleted;
-  });
+  const notCompletedTodos = useMemo(() => {
+    return todo.filter((t) => {
+      return !t.isCompleted;
+    });
+  }, [todo]);
 
   let todosToBeRendered = todo;
 
